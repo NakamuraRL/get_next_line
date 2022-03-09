@@ -6,7 +6,7 @@
 /*   By: grocha-l <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 15:31:05 by grocha-l          #+#    #+#             */
-/*   Updated: 2022/02/14 15:36:06 by grocha-l         ###   ########.fr       */
+/*   Updated: 2022/02/24 11:11:15 by grocha-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,11 @@ char	*ft_strcat(char *dest, char *src)
 	}
 	if (!dest || !src)
 		return (NULL);
-	cont = -1;
-	cont_2 = 0;
-	new_str = malloc(sizeof(char) * (ft_strlen(dest) + ft_strlen(src)) + 1);
+	new_str = malloc(sizeof(char) * (ft_strlen(dest) + ft_strlen(src) + 1));
 	if (!new_str)
 		return (NULL);
+	cont = -1;
+	cont_2 = 0;
 	if (dest)
 		while (dest[++cont] != '\0')
 			new_str[cont] = dest[cont];

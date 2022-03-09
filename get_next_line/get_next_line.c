@@ -6,39 +6,45 @@
 /*   By: grocha-l <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/24 14:46:26 by grocha-l          #+#    #+#             */
-/*   Updated: 2022/02/14 15:40:32 by grocha-l         ###   ########.fr       */
+/*   Updated: 2022/02/24 11:41:03 by grocha-l         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*ft_next_line(char *str)
+char	*ft_new_line(char *str)
 {
-	int		i;
-	int		j;
+	int		cont;
 	char	*line;
 
 	if (!str[0])
 		return (NULL);
-	i = 0;
-	while (str[i] != '\n' && str[i] != '\0')
-		i++;
-	line = malloc(sizeof(char) * i + 2);
+	line = malloc(sizeof(char) * ft_count_new_line(str) + 2);
 	if (line == NULL)
 		return (NULL);
-	j = 0;
-	while (str[j] != '\n' && str[j] != '\0')
+	cont = 0;
+	while (str[cont] != '\n' && str[cont])
 	{
-		line[j] = str[j];
-		j++;
+		line[cont] = str[cont];
+		cont++;
 	}
-	if (str[j] == '\n')
+	if (str[cont] == '\n')
 	{
-		line[j] = str[j];
-		j++;
+		line[cont] = str[cont];
+		cont++;
 	}
-	line[j] = '\0';
+	line[cont] = '\0';
 	return (line);
+}
+
+int	ft_count_new_line(char *str)
+{
+	int	cont;
+
+	cont = 0;
+	while (str[cont] && str[cont] != '\n')
+		cont++;
+	return (cont);
 }
 
 char	*ft_del_prev_line(char *str)
@@ -47,15 +53,13 @@ char	*ft_del_prev_line(char *str)
 	int		i;
 	int		j;
 
-	i = 0;
-	while (str[i] != '\n' && str[i] != '\0')
-		i++;
-	if (!str[0])
+	i = ft_count_new_line(str);
+	if (!str[i])
 	{
 		free(str);
 		return (NULL);
 	}
-	new_load = malloc(sizeof(char) * (ft_strlen(str) - i) + 1);
+	new_load = malloc(sizeof(char) * (ft_strlen(str) - i + 1));
 	if (!new_load)
 		return (NULL);
 	i++;
@@ -93,7 +97,7 @@ char	*get_next_line(int fd)
 		load = ft_strcat(load, line);
 	}
 	free(line);
-	next_line = ft_next_line(load);
+	next_line = ft_new_line(load);
 	load = ft_del_prev_line(load);
 	return (next_line);
 }
